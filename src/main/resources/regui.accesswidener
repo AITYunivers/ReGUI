@@ -1,0 +1,11 @@
+accessWidener v2 named
+
+transitive-accessible field net/minecraft/client/gui/hud/InGameHud ITEM_RENDERER Lnet/minecraft/client/render/item/ItemRenderer;
+transitive-accessible field net/minecraft/client/gui/hud/InGameHud messages Ljava/util/List;
+transitive-accessible field net/minecraft/client/gui/hud/InGameHud random Ljava/util/Random;
+transitive-accessible field net/minecraft/client/gui/hud/InGameHud minecraft Lnet/minecraft/client/Minecraft;
+transitive-accessible field net/minecraft/client/gui/hud/InGameHud ticks I
+transitive-accessible field net/minecraft/client/gui/hud/InGameHud overlayMessage Ljava/lang/String;
+transitive-accessible field net/minecraft/client/gui/hud/InGameHud overlayRemaining I
+transitive-accessible field net/minecraft/client/gui/hud/InGameHud overlayTinted Z
+transitive-accessible field net/minecraft/client/gui/hud/InGameHud vignetteDarkness F
