@@ -15,6 +15,8 @@ public class HudWidget extends DrawContext
 {
     public EHudDock dock;
     public EHudPriority priority = EHudPriority.NORMAL;
+    protected int baseWidth;
+    protected int baseHeight;
     public int width;
     public int height;
 
@@ -35,6 +37,9 @@ public class HudWidget extends DrawContext
 
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        width = baseWidth;
+        height = baseHeight;
+
         this.hud = hud;
         this.tickDelta = tickDelta;
         scaledWidth = scaler.getScaledWidth();
@@ -56,8 +61,8 @@ public class HudWidget extends DrawContext
         StationAPI.EVENT_BUS.post(event);
         if (stage == 0)
         {
-            width += event.inflateX - event.deflateX;
-            height += event.inflateY - event.deflateY;
+            width = baseWidth + event.inflateX - event.deflateX;
+            height = baseHeight + event.inflateY - event.deflateY;
         }
         return event;
     }

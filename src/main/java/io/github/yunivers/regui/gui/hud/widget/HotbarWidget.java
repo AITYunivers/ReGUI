@@ -17,8 +17,8 @@ public class HotbarWidget extends HudWidget
     public HotbarWidget()
     {
         super(EHudDock.BOTTOM);
-        this.width = 182;
-        this.height = 23;
+        this.baseWidth = 182;
+        this.baseHeight = 23;
     }
 
     @Override

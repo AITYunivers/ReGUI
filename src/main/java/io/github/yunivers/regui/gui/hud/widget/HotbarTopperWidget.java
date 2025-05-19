@@ -16,21 +16,21 @@ public class HotbarTopperWidget extends HudWidget
     public HotbarTopperWidget()
     {
         super(EHudDock.BOTTOM);
-        this.width = 182; // Inherits prevWidget in render (nvm, i'll code that later)
-        this.height = 9; // Scaled x2 when in water
+        this.baseWidth = 182; // Inherits prevWidget in render (nvm, i'll code that later)
+        this.baseHeight = 9; // Scaled x2 when in water
     }
 
     @Override
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        //this.baseWidth = prevWidget.width; TODO
+        this.baseHeight = 9;
+        if (hud.minecraft.player.isInFluid(Material.WATER))
+            this.baseHeight = 18;
         super.render(hud, tickDelta, scaler, xOffset, yOffset, prevWidget);
         HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
         if (eResult.cancelNextRender)
             return;
-        //this.width = prevWidget.width; TODO
-        this.height = 9 + eResult.inflateY - eResult.deflateY;
-        if (hud.minecraft.player.isInFluid(Material.WATER))
-            this.height = 18 + eResult.inflateY - eResult.deflateY;
 
         int width = scaler.getScaledWidth();
         int height = scaler.getScaledHeight();

@@ -16,7 +16,7 @@ public class CrosshairWidget extends HudWidget
     {
         super(EHudDock.CENTER);
         this.priority = EHudPriority.HIGH;
-        this.width = this.height = 16;
+        this.baseWidth = this.baseHeight = 16;
     }
 
     @Override
