@@ -24,7 +24,7 @@ public class HotbarTopperWidget extends HudWidget
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
         HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
-        if (!eResult.cancelNextRender)
+        if (eResult.cancelNextRender)
             return;
         //this.width = prevWidget.width; TODO
         this.height = 9 + eResult.inflateY - eResult.deflateY;

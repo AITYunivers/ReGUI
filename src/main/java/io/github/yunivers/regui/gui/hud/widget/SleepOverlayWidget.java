@@ -22,7 +22,7 @@ public class SleepOverlayWidget extends HudWidget
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
         HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
-        if (!eResult.cancelNextRender)
+        if (eResult.cancelNextRender)
             return;
         this.width = scaler.getScaledWidth();
         this.height = scaler.getScaledHeight();
