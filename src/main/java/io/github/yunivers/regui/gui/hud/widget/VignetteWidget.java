@@ -58,6 +58,7 @@ public class VignetteWidget extends HudWidget
             GL11.glEnable(2929);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glBlendFunc(770, 771);
+            this.renderEvent(3); // EOF
         }
     }
 }

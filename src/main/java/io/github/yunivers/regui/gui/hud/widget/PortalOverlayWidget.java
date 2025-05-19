@@ -69,6 +69,7 @@ public class PortalOverlayWidget extends HudWidget
             GL11.glEnable(2929);
             GL11.glEnable(3008);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            this.renderEvent(3); // EOF
         }
     }
 }

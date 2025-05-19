@@ -39,5 +39,6 @@ public class CrosshairWidget extends HudWidget
         this.renderEvent(2); // Post-Render
         GL11.glDisable(3042);
         GL11.glBlendFunc(770, 771);
+        this.renderEvent(3); // EOF
     }
 }

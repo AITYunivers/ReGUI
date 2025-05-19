@@ -121,5 +121,6 @@ public class HotbarTopperWidget extends HudWidget
 
         this.renderEvent(8); // Post-Render
         GL11.glDisable(3042);
+        this.renderEvent(9); // EOF
     }
 }

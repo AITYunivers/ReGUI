@@ -45,5 +45,6 @@ public class SleepOverlayWidget extends HudWidget
             GL11.glEnable(3008);
             GL11.glEnable(2929);
         }
+        this.renderEvent(3); // EOF
     }
 }

@@ -54,6 +54,7 @@ public class JukeboxOverlayWidget extends HudWidget
                 this.renderEvent(2); // Post-Render
                 GL11.glDisable(3042);
                 GL11.glPopMatrix();
+                this.renderEvent(3); // EOF
             }
         }
     }

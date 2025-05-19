@@ -8,7 +8,7 @@ import net.minecraft.client.gui.hud.InGameHud;
 @SuppressWarnings("unused")
 public class HudWidgetRenderEvent extends Event
 {
-    public Class<HudWidget> widget;
+    public HudWidget widget;
 
     // Event Data
     public int widgetOGWidth;
@@ -41,7 +41,7 @@ public class HudWidgetRenderEvent extends Event
     /// Changes per Widget, passes in anything that might be useful
     public Object[] args;
 
-    public HudWidgetRenderEvent(Class<HudWidget> widget, int stage, Object[] args)
+    public HudWidgetRenderEvent(HudWidget widget, int stage, Object[] args)
     {
         this.widget = widget;
         this.stage = stage;

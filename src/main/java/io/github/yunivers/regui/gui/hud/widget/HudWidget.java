@@ -49,10 +49,9 @@ public class HudWidget extends DrawContext
         return renderEvent(stage, offsetX, offsetY, args);
     }
 
-    @SuppressWarnings("unchecked")
     protected HudWidgetRenderEvent renderEvent(int stage, int offsetX, int offsetY, Object[] args)
     {
-        HudWidgetRenderEvent event = new HudWidgetRenderEvent((Class<HudWidget>)this.getClass(), stage, args);
+        HudWidgetRenderEvent event = new HudWidgetRenderEvent(this, stage, args);
         event.setEventData(width, height, offsetX, offsetY, hud, scaledWidth, scaledHeight, tickDelta, prevWidget);
         StationAPI.EVENT_BUS.post(event);
         if (stage == 0)

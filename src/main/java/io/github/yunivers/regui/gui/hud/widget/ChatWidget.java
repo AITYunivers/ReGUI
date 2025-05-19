@@ -87,5 +87,6 @@ public class ChatWidget extends HudWidget
         GL11.glPopMatrix();
         GL11.glEnable(3008);
         GL11.glDisable(3042);
+        this.renderEvent(7); // EOF
     }
 }

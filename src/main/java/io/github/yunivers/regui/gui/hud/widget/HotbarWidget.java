@@ -51,7 +51,7 @@ public class HotbarWidget extends HudWidget
         Lighting.turnOn();
         GL11.glPopMatrix();
 
-        this.renderEvent(4); // Pre-Hotbar Items
+        eResult = this.renderEvent(4); // Pre-Hotbar Items
         if (!eResult.cancelNextRender)
         {
             for (int slot = 0; slot < 9; slot++)
@@ -67,6 +67,7 @@ public class HotbarWidget extends HudWidget
 
         Lighting.turnOff();
         GL11.glDisable(32826);
+        this.renderEvent(9); // EOF
     }
 
     public void renderHotbarItem(InGameHud hud, int slot, int x, int y, float tickDelta)

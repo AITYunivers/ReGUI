@@ -107,7 +107,7 @@ public class DebugWidget extends HudWidget
             this.renderEvent(6); // Post-Render (Actual)
             GL11.glPopMatrix();
         }
-        this.renderEvent(7); // Post-Render
+        this.renderEvent(7); // Post-Render/EOF
     }
 
     // Used to access BetterF3
