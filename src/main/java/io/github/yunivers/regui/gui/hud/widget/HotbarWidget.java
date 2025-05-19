@@ -24,6 +24,7 @@ public class HotbarWidget extends HudWidget
     @Override
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        super.render(hud, tickDelta, scaler, xOffset, yOffset, prevWidget);
         HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
         if (eResult.cancelNextRender)
             return;
@@ -55,17 +56,17 @@ public class HotbarWidget extends HudWidget
         {
             for (int slot = 0; slot < 9; slot++)
             {
-                eResult = this.renderEvent(5); // Pre-Hotbar Item
+                eResult = this.renderEvent(5, slot); // Pre-Hotbar Item
                 int x = width / 2 - 90 + slot * 20 + 2;
                 int y = height - 16 - 3;
                 if (!eResult.cancelNextRender)
                     this.renderHotbarItem(hud, slot, x + xOffset + eResult.offsetX, y + yOffset + eResult.offsetY, tickDelta);
             }
         }
+        this.renderEvent(8); // Post-Render
 
         Lighting.turnOff();
         GL11.glDisable(32826);
-        this.renderEvent(8); // Post-Render
     }
 
     private void renderHotbarItem(InGameHud hud, int slot, int x, int y, float tickDelta)
@@ -83,13 +84,13 @@ public class HotbarWidget extends HudWidget
                 GL11.glTranslatef((float)(-(x + 8)), (float)(-(y + 12)), 0.0F);
             }
 
-            HudWidgetRenderEvent eResult = this.renderEvent(6); // Pre-Hotbar Item Render
+            HudWidgetRenderEvent eResult = this.renderEvent(6, slot, stack, x, y, tickDelta); // Pre-Hotbar Item Render
             if (!eResult.cancelNextRender)
                 InGameHud.ITEM_RENDERER.renderGuiItem(hud.minecraft.textRenderer, hud.minecraft.textureManager, stack, x + eResult.offsetX, y + eResult.offsetY);
             if (var6 > 0.0F)
                 GL11.glPopMatrix();
 
-            eResult = this.renderEvent(7); // Post-Hotbar Item Render/Pre-Hotbar Item Decoration Render
+            eResult = this.renderEvent(7, slot, stack, x, y, tickDelta); // Post-Hotbar Item Render/Pre-Hotbar Item Decoration Render
             if (!eResult.cancelNextRender)
                 InGameHud.ITEM_RENDERER.renderGuiItemDecoration(hud.minecraft.textRenderer, hud.minecraft.textureManager, stack, x + eResult.offsetX, y + eResult.offsetY);
         }

@@ -18,6 +18,11 @@ public class HudWidget extends DrawContext
     public int width;
     public int height;
 
+    // For event
+    private InGameHud hud;
+    private int offsetX;
+    private int offsetY;
+
     public HudWidget(EHudDock dock)
     {
         this.dock = dock;
@@ -26,13 +31,20 @@ public class HudWidget extends DrawContext
 
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
-
+        this.hud = hud;
+        offsetX = xOffset;
+        offsetY = yOffset;
+    }
+    protected HudWidgetRenderEvent renderEvent(int stage, Object... args)
+    {
+        return renderEvent(stage, offsetX, offsetY, args);
     }
 
     @SuppressWarnings("unchecked")
-    protected HudWidgetRenderEvent renderEvent(int stage)
+    protected HudWidgetRenderEvent renderEvent(int stage, int offsetX, int offsetY, Object... args)
     {
-        HudWidgetRenderEvent event = new HudWidgetRenderEvent((Class<HudWidget>)this.getClass(), stage);
+        HudWidgetRenderEvent event = new HudWidgetRenderEvent((Class<HudWidget>)this.getClass(), stage, args);
+        event.setEventData(width, height, offsetX, offsetY, hud);
         StationAPI.EVENT_BUS.post(event);
         if (stage == 0)
         {

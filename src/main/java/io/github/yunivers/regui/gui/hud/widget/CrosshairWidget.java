@@ -22,6 +22,7 @@ public class CrosshairWidget extends HudWidget
     @Override
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        super.render(hud, tickDelta, scaler, xOffset, yOffset, prevWidget);
         HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
         if (eResult.cancelNextRender)
             return;
@@ -35,8 +36,8 @@ public class CrosshairWidget extends HudWidget
         eResult = this.renderEvent(1); // Pre-Render (Actual)
         if (!eResult.cancelNextRender)
             this.drawTexture(width / 2 - 7 + eResult.offsetX, height / 2 - 7 + eResult.offsetY, 0, 0, 16, 16);
+        this.renderEvent(2); // Post-Render
         GL11.glDisable(3042);
         GL11.glBlendFunc(770, 771);
-        this.renderEvent(2); // Post-Render
     }
 }

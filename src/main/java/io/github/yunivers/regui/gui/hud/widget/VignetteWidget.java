@@ -24,6 +24,7 @@ public class VignetteWidget extends HudWidget
     @Override
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        super.render(hud, tickDelta, scaler, xOffset, yOffset, prevWidget);
         HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
         if (eResult.cancelNextRender)
             return;
@@ -32,7 +33,6 @@ public class VignetteWidget extends HudWidget
 
         if (Minecraft.isFancyGraphicsEnabled())
         {
-            eResult = this.renderEvent(1); // Pre-Render (Actual)
             GL11.glEnable(3042);
             float brightness = MathHelper.clamp(1.0F - hud.minecraft.player.getBrightnessAtEyes(tickDelta), 0.0F, 1.0F);
 
@@ -42,6 +42,7 @@ public class VignetteWidget extends HudWidget
             GL11.glBlendFunc(0, 769);
             GL11.glColor4f(hud.vignetteDarkness, hud.vignetteDarkness, hud.vignetteDarkness, 1.0F);
             GL11.glBindTexture(3553, hud.minecraft.textureManager.getTextureId("%blur%/misc/vignette.png"));
+            eResult = this.renderEvent(1); // Pre-Render (Actual)
             if (!eResult.cancelNextRender)
             {
                 Tessellator var4 = Tessellator.INSTANCE;
@@ -52,11 +53,11 @@ public class VignetteWidget extends HudWidget
                 var4.vertex(0,  0,      -90, 0, 0);
                 var4.draw();
             }
+            this.renderEvent(2); // Post-Render
             GL11.glDepthMask(true);
             GL11.glEnable(2929);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             GL11.glBlendFunc(770, 771);
-            this.renderEvent(2); // Post-Render
         }
     }
 }

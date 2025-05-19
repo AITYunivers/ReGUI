@@ -23,6 +23,7 @@ public class HotbarTopperWidget extends HudWidget
     @Override
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        super.render(hud, tickDelta, scaler, xOffset, yOffset, prevWidget);
         HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
         if (eResult.cancelNextRender)
             return;
@@ -50,7 +51,7 @@ public class HotbarTopperWidget extends HudWidget
 
             for (int iconId = 0; iconId < 10; iconId++)
             {
-                eResult = this.renderEvent(2); // Pre-Icon Index Render
+                eResult = this.renderEvent(1, iconId, armorDurability); // Pre-Armor Icon Render
                 int y = height - 9 + yOffset;
                 if (armorDurability > 0 && !eResult.cancelNextRender)
                 {
@@ -64,7 +65,7 @@ public class HotbarTopperWidget extends HudWidget
                     if (iconId * 2 + 1 > armorDurability)
                         this.drawTexture(x + eResult.offsetX, y + eResult.offsetY, 16, 9, 9, 9);
                 }
-                eResult = this.renderEvent(3); // Post-Armor Icon Render/Pre-Heart Icon Render
+                eResult = this.renderEvent(2, iconId); // Post-Armor Icon Render/Pre-Heart Icon Render
 
                 byte isHalf = 0;
                 if (var12)
@@ -93,30 +94,32 @@ public class HotbarTopperWidget extends HudWidget
                     if (iconId * 2 + 1 == var13)
                         this.drawTexture(x, y, 61, 0, 9, 9);
                 }
-                this.renderEvent(4); // Post-Heart Icon Render
+                this.renderEvent(3, iconId); // Post-Heart Icon Render
             }
 
             if (hud.minecraft.player.isInFluid(Material.WATER))
             {
-                eResult = this.renderEvent(5); // Pre-Bubble Icon Render
                 int poppedAir = (int)Math.ceil((double)(hud.minecraft.player.air - 2) * 10.0 / 300.0);
                 int realAir = (int)Math.ceil((double)hud.minecraft.player.air * 10.0 / 300.0) - poppedAir;
 
+                eResult = this.renderEvent(4, poppedAir, realAir); // Possible Pre-Bubble Icons Render
                 if (!eResult.cancelNextRender)
                 {
                     for (int air = 0; air < poppedAir + realAir; air++)
                     {
+                        this.renderEvent(5, air, poppedAir, realAir); // Pre-Bubble Icon Render
                         if (air < poppedAir)
                             this.drawTexture(width / 2 - 91 + air * 8 + xOffset + eResult.offsetX, height - 18 + yOffset + eResult.offsetY, 16, 18, 9, 9);
                         else
                             this.drawTexture(width / 2 - 91 + air * 8 + xOffset + eResult.offsetX, height - 18 + yOffset + eResult.offsetY, 25, 18, 9, 9);
+                        this.renderEvent(6, air, poppedAir, realAir); // Post-Bubble Icon Render
                     }
                 }
-                this.renderEvent(6); // Post-Bubble Icon Render
+                this.renderEvent(7); // Possible Post-Bubble Icons Render
             }
         }
 
+        this.renderEvent(8); // Post-Render
         GL11.glDisable(3042);
-        this.renderEvent(7); // Post-Render
     }
 }

@@ -26,6 +26,7 @@ public class PortalOverlayWidget extends HudWidget
     @Override
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        super.render(hud, tickDelta, scaler, xOffset, yOffset, prevWidget);
         HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
         if (eResult.cancelNextRender)
             return;
@@ -35,7 +36,6 @@ public class PortalOverlayWidget extends HudWidget
         float distortion = hud.minecraft.player.lastScreenDistortion + (hud.minecraft.player.screenDistortion - hud.minecraft.player.lastScreenDistortion) * tickDelta;
         if (distortion > 0.0F)
         {
-            eResult = this.renderEvent(1); // Pre-Render (Actual)
             if (distortion < 1.0F)
             {
                 distortion *= distortion;
@@ -52,6 +52,7 @@ public class PortalOverlayWidget extends HudWidget
             StationRenderAPI.getBakedModelManager().getAtlas(Atlases.GAME_ATLAS_TEXTURE).bindTexture();
             Sprite sprite = Block.NETHER_PORTAL.getAtlas().getTexture(Block.NETHER_PORTAL.textureId).getSprite();
 
+            eResult = this.renderEvent(1, distortion, sprite); // Pre-Render (Actual)
             if (!eResult.cancelNextRender)
             {
                 Tessellator t = Tessellator.INSTANCE;
@@ -62,12 +63,12 @@ public class PortalOverlayWidget extends HudWidget
                 t.vertex(0,  0,      -90, sprite.getMinU(), sprite.getMinV());
                 t.draw();
             }
+            this.renderEvent(2); // Post-Render
 
             GL11.glDepthMask(true);
             GL11.glEnable(2929);
             GL11.glEnable(3008);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.renderEvent(2); // Post-Render
         }
     }
 }

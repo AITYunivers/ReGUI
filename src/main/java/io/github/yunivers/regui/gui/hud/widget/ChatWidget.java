@@ -23,6 +23,7 @@ public class ChatWidget extends HudWidget
     @Override
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        super.render(hud, tickDelta, scaler, xOffset, yOffset, prevWidget);
         HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
         if (eResult.cancelNextRender)
             return;
@@ -43,12 +44,12 @@ public class ChatWidget extends HudWidget
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, (float)(height - 48), 0.0F);
 
-        eResult = this.renderEvent(1); // Pre-Render (Actual)
+        eResult = this.renderEvent(1, msgLimit, fullView); // Pre-Render (Actual)
         if (!eResult.cancelNextRender)
         {
             for (int msgId = 0; msgId < hud.messages.size() && msgId < msgLimit; msgId++)
             {
-                eResult = this.renderEvent(2); // Possible Pre-Render Message
+                eResult = this.renderEvent(2, msgId); // Possible Pre-Render Message
                 if ((((ChatHudLine)hud.messages.get(msgId)).age < 200 || fullView) && !eResult.cancelNextRender)
                 {
                     double alphaCalc = (double)((ChatHudLine)hud.messages.get(msgId)).age / 200.0;
@@ -67,24 +68,24 @@ public class ChatWidget extends HudWidget
 
                     if (alpha > 0)
                     {
-                        eResult = this.renderEvent(3); // Pre-Render Message
                         byte x = 2;
                         int y = -msgId * 9;
-                        String var49 = ((ChatHudLine)hud.messages.get(msgId)).text;
+                        String message = ((ChatHudLine)hud.messages.get(msgId)).text;
+                        eResult = this.renderEvent(3, msgId, alphaCalc, alpha, message); // Pre-Render Message
                         if (!eResult.cancelNextRender)
                             this.fill(x, y - 1, x + 320, y + 8, alpha / 2 << 24);
                         GL11.glEnable(3042);
-                        hud.minecraft.textRenderer.drawWithShadow(var49, x, y, 16777215 + (alpha << 24));
-                        this.renderEvent(4); // Post-Render Message
+                        hud.minecraft.textRenderer.drawWithShadow(message, x, y, 16777215 + (alpha << 24));
+                        this.renderEvent(4, msgId, message); // Post-Render Message
                     }
                 }
-                this.renderEvent(5); // Possible Post-Render Message
+                this.renderEvent(5, msgId); // Possible Post-Render Message
             }
         }
 
+        this.renderEvent(6); // Post-Render
         GL11.glPopMatrix();
         GL11.glEnable(3008);
         GL11.glDisable(3042);
-        this.renderEvent(6); // Post-Render
     }
 }

@@ -21,6 +21,7 @@ public class SleepOverlayWidget extends HudWidget
     @Override
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        super.render(hud, tickDelta, scaler, xOffset, yOffset, prevWidget);
         HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
         if (eResult.cancelNextRender)
             return;
@@ -29,7 +30,6 @@ public class SleepOverlayWidget extends HudWidget
 
         if (hud.minecraft.player.getSleepTimer() > 0)
         {
-            eResult = this.renderEvent(1); // Pre-Render (Actual)
             GL11.glDisable(2929);
             GL11.glDisable(3008);
             int sleepTimer = hud.minecraft.player.getSleepTimer();
@@ -38,11 +38,12 @@ public class SleepOverlayWidget extends HudWidget
                 progress = 1.0F - (float)(sleepTimer - 100) / 10.0F;
 
             int color = (int)(220.0F * progress) << 24 | 1052704;
+            eResult = this.renderEvent(1); // Pre-Render (Actual)
             if (!eResult.cancelNextRender)
                 this.fill(0, 0, width, height, color);
+            this.renderEvent(2); // Post-Render
             GL11.glEnable(3008);
             GL11.glEnable(2929);
-            this.renderEvent(2); // Post-Render
         }
     }
 }

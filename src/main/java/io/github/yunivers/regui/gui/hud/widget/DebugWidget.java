@@ -31,6 +31,7 @@ public class DebugWidget extends HudWidget
     @Override
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        super.render(hud, tickDelta, scaler, xOffset, yOffset, prevWidget);
         HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
         if (eResult.cancelNextRender)
             return;
@@ -71,40 +72,40 @@ public class DebugWidget extends HudWidget
 
         if (hud.minecraft.options.debugHud)
         {
-            eResult = this.renderEvent(1); // Pre-Render (Actual)
             GL11.glPushMatrix();
             if (Minecraft.failedSessionCheckTime > 0L)
                 GL11.glTranslatef(0.0F, 32.0F, 0.0F);
 
+            eResult = this.renderEvent(1); // Pre-Render (Actual)
             if (!eResult.cancelNextRender)
             {
                 int y = 2;
                 for (DebugModule module : leftModules)
                 {
-                    eResult = this.renderEvent(2); // Pre-Render Left Module
+                    eResult = this.renderEvent(2, module, y); // Pre-Render Left Module
                     if (!eResult.cancelNextRender)
                     {
                         module.render(hud.minecraft, y + eResult.offsetY, width);
                         y += module.height;
                     }
-                    this.renderEvent(3); // Post-Render Left Module
+                    this.renderEvent(3, module, y); // Post-Render Left Module
                 }
 
                 y = 2;
                 for (DebugModule module : rightModules)
                 {
-                    eResult = this.renderEvent(4); // Pre-Render Right Module
+                    eResult = this.renderEvent(4, module, y); // Pre-Render Right Module
                     if (!eResult.cancelNextRender)
                     {
                         module.render(hud.minecraft, y + eResult.offsetY, width);
                         y += module.height;
                     }
-                    this.renderEvent(5); // Post-Render Right Module
+                    this.renderEvent(5, module, y); // Post-Render Right Module
                 }
             }
 
-            GL11.glPopMatrix();
             this.renderEvent(6); // Post-Render (Actual)
+            GL11.glPopMatrix();
         }
         this.renderEvent(7); // Post-Render
     }
