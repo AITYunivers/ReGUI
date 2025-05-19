@@ -69,7 +69,7 @@ public class HotbarWidget extends HudWidget
         GL11.glDisable(32826);
     }
 
-    private void renderHotbarItem(InGameHud hud, int slot, int x, int y, float tickDelta)
+    public void renderHotbarItem(InGameHud hud, int slot, int x, int y, float tickDelta)
     {
         ItemStack stack = hud.minecraft.player.inventory.main[slot];
         if (stack != null)

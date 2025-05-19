@@ -17,7 +17,11 @@ public class HudWidgetRenderEvent extends Event
     public int widgetHeight;
     public int widgetDockOffsetX;
     public int widgetDockOffsetY;
+    public int scaledWidth;
+    public int scaledHeight;
+    public float tickDelta;
     public InGameHud hud;
+    public HudWidget prevWidget;
 
     // Return Data
     public int stage;
@@ -94,12 +98,16 @@ public class HudWidgetRenderEvent extends Event
     }
 
     @SneakyThrows
-    public void setEventData(int width, int height, int offsetX, int offsetY, InGameHud hud)
+    public void setEventData(int width, int height, int offsetX, int offsetY, InGameHud hud, int scaledWidth, int scaledHeight, float tickDelta, HudWidget prevWidget)
     {
         widgetOGWidth = widgetWidth = width;
         widgetOGHeight = widgetHeight = height;
         widgetDockOffsetX = offsetX;
         widgetDockOffsetY = offsetY;
+        this.scaledWidth = scaledWidth;
+        this.scaledHeight = scaledHeight;
+        this.tickDelta = tickDelta;
         this.hud = hud;
+        this.prevWidget = prevWidget;
     }
 }

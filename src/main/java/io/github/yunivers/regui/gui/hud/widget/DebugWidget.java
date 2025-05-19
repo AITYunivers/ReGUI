@@ -20,7 +20,7 @@ public class DebugWidget extends HudWidget
 {
     public static ArrayList<DebugModule> leftModules = new ArrayList<>();
     public static ArrayList<DebugModule> rightModules = new ArrayList<>();
-    private boolean betterf3$previousDebugHudValue = false;
+    public boolean betterf3$previousDebugHudValue = false;
 
     public DebugWidget()
     {
@@ -111,7 +111,7 @@ public class DebugWidget extends HudWidget
     }
 
     // Used to access BetterF3
-    private static void invokeMethod(Object instance, String methodName) throws Exception
+    public static void invokeMethod(Object instance, String methodName) throws Exception
     {
         Method method = instance.getClass().getDeclaredMethod(methodName);
         method.setAccessible(true);
