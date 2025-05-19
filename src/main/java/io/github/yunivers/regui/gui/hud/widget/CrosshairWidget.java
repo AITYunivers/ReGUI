@@ -1,5 +1,6 @@
 package io.github.yunivers.regui.gui.hud.widget;
 
+import io.github.yunivers.regui.event.HudWidgetRenderEvent;
 import io.github.yunivers.regui.util.EHudDock;
 import io.github.yunivers.regui.util.EHudPriority;
 import net.fabricmc.api.EnvType;
@@ -21,6 +22,9 @@ public class CrosshairWidget extends HudWidget
     @Override
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
+        if (!eResult.cancelNextRender)
+            return;
         int width = scaler.getScaledWidth();
         int height = scaler.getScaledHeight();
         this.zOffset = -90.0F;
@@ -28,8 +32,11 @@ public class CrosshairWidget extends HudWidget
         GL11.glBindTexture(3553, hud.minecraft.textureManager.getTextureId("/gui/icons.png"));
         GL11.glEnable(3042);
         GL11.glBlendFunc(775, 769);
-        this.drawTexture(width / 2 - 7, height / 2 - 7, 0, 0, 16, 16);
+        eResult = this.renderEvent(1); // Pre-Render (Actual)
+        if (!eResult.cancelNextRender)
+            this.drawTexture(width / 2 - 7 + eResult.offsetX, height / 2 - 7 + eResult.offsetY, 0, 0, 16, 16);
         GL11.glDisable(3042);
         GL11.glBlendFunc(770, 771);
+        this.renderEvent(2); // Post-Render
     }
 }

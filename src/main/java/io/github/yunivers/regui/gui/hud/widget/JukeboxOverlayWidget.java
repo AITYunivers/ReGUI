@@ -1,5 +1,6 @@
 package io.github.yunivers.regui.gui.hud.widget;
 
+import io.github.yunivers.regui.event.HudWidgetRenderEvent;
 import io.github.yunivers.regui.util.EHudDock;
 import io.github.yunivers.regui.util.EHudPriority;
 import net.fabricmc.api.EnvType;
@@ -23,6 +24,9 @@ public class JukeboxOverlayWidget extends HudWidget
     @Override
     public void render(InGameHud hud, float tickDelta, ScreenScaler scaler, int xOffset, int yOffset, HudWidget prevWidget)
     {
+        HudWidgetRenderEvent eResult = this.renderEvent(0); // Pre-Render
+        if (!eResult.cancelNextRender)
+            return;
         int width = scaler.getScaledWidth();
         int height = scaler.getScaledHeight();
         this.zOffset = -90.0F;
@@ -34,6 +38,7 @@ public class JukeboxOverlayWidget extends HudWidget
 
             if (alpha > 0)
             {
+                eResult = this.renderEvent(1); // Pre-Render (Actual)
                 GL11.glPushMatrix();
                 GL11.glTranslatef((float)(width / 2), (float)(height - 48), 0.0F);
                 GL11.glEnable(3042);
@@ -43,9 +48,11 @@ public class JukeboxOverlayWidget extends HudWidget
                     color = Color.HSBtoRGB(overlayRemaining / 50.0F, 0.7F, 0.6F) & 16777215;
 
                 TextRenderer textRenderer = hud.minecraft.textRenderer;
-                textRenderer.draw(hud.overlayMessage, -textRenderer.getWidth(hud.overlayMessage) / 2, -4, color + (alpha << 24));
+                if (!eResult.cancelNextRender)
+                    textRenderer.draw(hud.overlayMessage, -textRenderer.getWidth(hud.overlayMessage) / 2, -4, color + (alpha << 24));
                 GL11.glDisable(3042);
                 GL11.glPopMatrix();
+                this.renderEvent(2); // Post-Render
             }
         }
     }
