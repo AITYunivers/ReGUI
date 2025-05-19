@@ -41,7 +41,7 @@ public class HudWidget extends DrawContext
     }
 
     @SuppressWarnings("unchecked")
-    protected HudWidgetRenderEvent renderEvent(int stage, int offsetX, int offsetY, Object... args)
+    protected HudWidgetRenderEvent renderEvent(int stage, int offsetX, int offsetY, Object[] args)
     {
         HudWidgetRenderEvent event = new HudWidgetRenderEvent((Class<HudWidget>)this.getClass(), stage, args);
         event.setEventData(width, height, offsetX, offsetY, hud);
