@@ -38,6 +38,7 @@ public class HotbarTopperWidget extends HudWidget
 
         GL11.glEnable(3042);
         GL11.glBindTexture(3553, hud.minecraft.textureManager.getTextureId("/gui/icons.png"));
+        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         boolean var12 = hud.minecraft.player.hearts / 3 % 2 == 1;
         if (hud.minecraft.player.hearts < 10)
             var12 = false;

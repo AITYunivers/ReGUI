@@ -94,6 +94,8 @@ public class HotbarWidget extends HudWidget
             eResult = this.renderEvent(7, slot, stack, x, y, tickDelta); // Post-Hotbar Item Render/Pre-Hotbar Item Decoration Render
             if (!eResult.cancelNextRender)
                 InGameHud.ITEM_RENDERER.renderGuiItemDecoration(hud.minecraft.textRenderer, hud.minecraft.textureManager, stack, x + eResult.offsetX, y + eResult.offsetY);
+
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
         }
     }
 }
